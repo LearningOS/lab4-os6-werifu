@@ -258,3 +258,8 @@ impl Iterator for UserBufferIterator {
         }
     }
 }
+
+pub fn translate_va(token: usize, va: VirtAddr) -> Option<PhysAddr> {
+    let page_table = PageTable::from_token(token);
+    page_table.translate_va(va)
+}
