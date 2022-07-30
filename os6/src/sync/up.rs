@@ -25,6 +25,7 @@ impl<T> UPSafeCell<T> {
         }
     }
     /// Panic if the data has been borrowed.
+    #[track_caller]
     pub fn exclusive_access(&self) -> RefMut<'_, T> {
         self.inner.borrow_mut()
     }

@@ -88,6 +88,7 @@ impl TaskControlBlockInner {
 
 impl TaskControlBlock {
     /// Get the mutex to get the RefMut TaskControlBlockInner
+    #[track_caller]
     pub fn inner_exclusive_access(&self) -> RefMut<'_, TaskControlBlockInner> {
         self.inner.exclusive_access()
     }

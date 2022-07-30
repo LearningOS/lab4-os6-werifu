@@ -9,6 +9,8 @@ pub trait File : Send + Sync {
     fn writable(&self) -> bool;
     fn read(&self, buf: UserBuffer) -> usize;
     fn write(&self, buf: UserBuffer) -> usize;
+    /// 返回 file 的状态, (ino, mode, nlink)
+    fn fstat(&self) -> (u64, StatMode, u32);
 }
 
 /// The stat of a inode
