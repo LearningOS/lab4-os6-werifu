@@ -166,3 +166,11 @@ impl File for OSInode {
         (ino, mode, nlink)
     }
 }
+
+pub fn linkat(old_name: &str, new_name: &str) -> isize {
+    ROOT_INODE.linkat(old_name, new_name)
+}
+
+pub fn unlink(name: &str) -> isize {
+    ROOT_INODE.unlink(name)
+}

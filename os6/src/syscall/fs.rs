@@ -3,6 +3,7 @@
 use crate::fs::open_file;
 use crate::fs::OpenFlags;
 use crate::fs::Stat;
+use crate::fs::{linkat, unlink};
 use crate::mm::translated_byte_buffer;
 use crate::mm::translated_refmut;
 use crate::mm::translated_str;
@@ -97,10 +98,19 @@ pub fn sys_fstat(fd: usize, st: *mut Stat) -> isize {
     }
 }
 
-pub fn sys_linkat(_old_name: *const u8, _new_name: *const u8) -> isize {
-    -1
+pub fn sys_linkat(old_name: *const u8, new_name: *const u8) -> isize {
+    let token = current_user_token();
+    let old_name = translated_str(token, old_name);
+    let new_name = translated_str(token, new_name);
+    if old_name == new_name {
+        println!("old_name should not be euqal to new_name: {}", old_name);
+        return -1;
+    }
+    linkat(old_name.as_str(), new_name.as_str())
 }
 
-pub fn sys_unlinkat(_name: *const u8) -> isize {
-    -1
+pub fn sys_unlinkat(name: *const u8) -> isize {
+    let token = current_user_token();
+    let name = translated_str(token, name);
+    unlink(name.as_str())
 }
