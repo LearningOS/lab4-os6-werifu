@@ -24,7 +24,7 @@ pub fn main() -> i32 {
         assert_eq!(unlink(fname), 0);
         let fd = open(fname, OpenFlags::RDONLY);
         assert!(fd < 0);
-        println!("test iteration {}", i)
+        println!("test iteration {}", i);
     }
     println!("Test mass open/unlink OK!");
     0
